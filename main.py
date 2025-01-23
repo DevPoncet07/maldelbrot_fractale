@@ -26,10 +26,11 @@ class Root(Tk):
         self.calculateur=Calculateur(self)
 
 
+    def click(self,x,y):
+        self.calculateur.set_position(x,y)
 
     def lance(self,arg):
         self.variable_progress.set(0)
-        print(arg[1:])
         self.liste_all_pixel = self.calculateur.create_liste(self.size_array)
         self.liste_all_pixel = self.calculateur.calculate_liste(self.liste_all_pixel,arg)
         self.img = self.calculateur.change_liste_to_img(self.liste_all_pixel)

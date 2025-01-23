@@ -6,11 +6,25 @@ from PIL import Image,ImageTk
 class Calculateur:
     def __init__(self,boss):
         self.boss=boss
+        self.size=[500,500]
         self.iteration_max=25
         self.coord_x_min=(-2.5)
         self.coord_y_min=(-2)
         self.coord_x_max=1.5
         self.coord_y_max=2
+        self.palettes=[[255,0,0],
+                       [255,255,0],
+                       [0,255,0],
+                       [0,255,255],
+                       [0,0,255],
+                       [255,0,255]]
+        self.coul_black=[0,0,0]
+        self.gradient = np.linspace(self.palettes[0],self.palettes[1],num=10,dtype=int)
+        self.gradient=np.concatenate([self.gradient,np.linspace(self.palettes[1],self.palettes[2],num=20,dtype=int)])
+        self.gradient = np.concatenate([self.gradient, np.linspace(self.palettes[2], self.palettes[3], num=40, dtype=int)])
+        self.gradient = np.concatenate([self.gradient, np.linspace(self.palettes[3], self.palettes[4], num=30, dtype=int)])
+        self.gradient = np.concatenate([self.gradient, np.linspace(self.palettes[4], self.palettes[5], num=30, dtype=int)])
+        print(self.gradient)
 
 
     def create_liste(self,size):
@@ -22,9 +36,15 @@ class Calculateur:
         img=ImageTk.PhotoImage(img)
         return img
 
+    def set_position(self,x,y):
+        pas_x = (self.coord_x_max + abs(self.coord_x_min)) / self.size[0]
+        pas_y = (self.coord_y_max + abs(self.coord_y_min)) /self.size[1]
+        new_x=self.coord_x_min+pas_x*x
+        new_y=self.coord_y_min+pas_y*y
+        print(new_x,new_y)
+
     def calculate_liste(self,tab,arg):
         self.iteration_max=arg[0]
-        valeur_deplacement = arg[2]
         self.coord_x_min = arg[1][0]
         self.coord_y_min = arg[1][1]
         self.coord_x_max = arg[1][2]
@@ -54,7 +74,9 @@ class Calculateur:
             x=x_temp
             iteration+=1
         if iteration==self.iteration_max:
-            return [0,0,0]
+            return self.coul_black
         else:
-            return[255,255,255]
+            index=iteration%130
+            return self.gradient[index]
+
 
