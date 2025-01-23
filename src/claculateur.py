@@ -24,7 +24,6 @@ class Calculateur:
         self.gradient = np.concatenate([self.gradient, np.linspace(self.palettes[2], self.palettes[3], num=40, dtype=int)])
         self.gradient = np.concatenate([self.gradient, np.linspace(self.palettes[3], self.palettes[4], num=30, dtype=int)])
         self.gradient = np.concatenate([self.gradient, np.linspace(self.palettes[4], self.palettes[5], num=30, dtype=int)])
-        print(self.gradient)
 
 
     def create_liste(self,size):
@@ -41,7 +40,6 @@ class Calculateur:
         pas_y = (self.coord_y_max + abs(self.coord_y_min)) /self.size[1]
         new_x=self.coord_x_min+pas_x*x
         new_y=self.coord_y_min+pas_y*y
-        print(new_x,new_y)
 
     def calculate_liste(self,tab,arg):
         self.iteration_max=arg[0]
