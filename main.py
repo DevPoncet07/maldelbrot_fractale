@@ -38,7 +38,7 @@ class Root(Tk):
         self.variable_progress.set(0)
         self.update()
 
-    def step_progressbar(self,step):
+    def step_progressbar(self):
         self.variable_progress.set(self.variable_progress.get()+1)
         self.update()
 
