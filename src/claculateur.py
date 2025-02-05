@@ -28,20 +28,31 @@ class Calculateur:
         return[[[50,50,50] for _ in range(size[0])] for _ in range(size[1])]
 
     def genere_gradian(self):
-        self.gradian = np.linspace(self.palettes[0], self.palettes[1], num=10, dtype=int)
+        nb_max=self.iteration_max
+        nb_max=int(nb_max/2)
+
+        self.gradian = np.linspace(self.palettes[0], self.palettes[1], num=nb_max, dtype=int)
+        nb_max = int(nb_max / 2)
+
         self.gradian = np.concatenate(
-            [self.gradian, np.linspace(self.palettes[1], self.palettes[2], num=10, dtype=int)])
+            [self.gradian, np.linspace(self.palettes[1], self.palettes[2], num=nb_max, dtype=int)])
+        nb_max = int(nb_max / 2)
+
         self.gradian = np.concatenate(
-            [self.gradian, np.linspace(self.palettes[2], self.palettes[3], num=10, dtype=int)])
+            [self.gradian, np.linspace(self.palettes[2], self.palettes[3], num=nb_max, dtype=int)])
+        nb_max = int(nb_max / 2)
+
         self.gradian = np.concatenate(
-            [self.gradian, np.linspace(self.palettes[3], self.palettes[4], num=10, dtype=int)])
+            [self.gradian, np.linspace(self.palettes[3], self.palettes[4], num=nb_max, dtype=int)])
+        nb_max = self.iteration_max-nb_max
+
         self.gradian = np.concatenate(
-            [self.gradian, np.linspace(self.palettes[4], self.palettes[5], num=10, dtype=int)])
+            [self.gradian, np.linspace(self.palettes[4], self.palettes[5], num=nb_max, dtype=int)])
 
     def change_liste_to_img(self,tab):
         new_tab=np.array(tab)
         img=Image.fromarray(np.uint8(new_tab)).convert('RGB')
-        img=ImageTk.PhotoImage(img.resize(self.size,Image.Resampling.BICUBIC))
+        img=ImageTk.PhotoImage(img.resize(self.size,Image.Resampling.LANCZOS))
         return img
 
     def set_position(self,x,y):
@@ -75,7 +86,7 @@ class Calculateur:
     def calculate_pixel(self,coord):
         iteration=0
         x,y=0,0
-        while x*x+y-y<=4 and iteration<self.iteration_max:
+        while x*x+y-y<=10000 and iteration<self.iteration_max:
             x_temp=x*x-y*y+coord[0]
             y=2*x*y+coord[1]
             x=x_temp
@@ -83,6 +94,6 @@ class Calculateur:
         if iteration==self.iteration_max:
             return self.coul_black
         else:
-            return self.gradian[int(iteration%50)]
+            return self.gradian[int(iteration%self.iteration_max)]
 
 
